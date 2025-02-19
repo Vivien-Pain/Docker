@@ -19,14 +19,15 @@ class LegoService
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    // Méthode pour récupérer un Lego
-    public function getLego(): ?Lego
+    // Méthode pour récupérer tous les Legos
+    public function getLegos(): array
     {
-        // Requête SQL pour récupérer un Lego
-        $stmt = $this->pdo->query("SELECT * FROM lego LIMIT 1"); // Exemple, récupère un Lego
-        $legoData = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Requête SQL pour récupérer tous les Legos
+        $stmt = $this->pdo->query("SELECT * FROM lego"); // Exemple, récupère tous les Legos
+        $legosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if ($legoData) {
+        $legos = [];
+        foreach ($legosData as $legoData) {
             // Création d'un objet Lego à partir des données récupérées
             $lego = new Lego($legoData['id'], $legoData['name'], $legoData['collection']);
             $lego->setDescription($legoData['description']);
@@ -35,10 +36,34 @@ class LegoService
             $lego->setBoxImage($legoData['imagebox']);
             $lego->setLegoImage($legoData['imagebg']);
 
-            return $lego; // Retourne l'objet Lego
+            $legos[] = $lego; // Ajoute l'objet Lego au tableau
         }
 
-        return null; // Si aucun Lego trouvé
+        return $legos; // Retourne le tableau d'objets Lego
+    }
+
+    // Méthode pour récupérer les Legos par collection
+    public function getLegosByCollection(string $collection): array
+    {
+        // Requête SQL pour récupérer les Legos par collection
+        $stmt = $this->pdo->prepare("SELECT * FROM lego WHERE collection = :collection");
+        $stmt->execute(['collection' => $collection]);
+        $legosData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $legos = [];
+        foreach ($legosData as $legoData) {
+            // Création d'un objet Lego à partir des données récupérées
+            $lego = new Lego($legoData['id'], $legoData['name'], $legoData['collection']);
+            $lego->setDescription($legoData['description']);
+            $lego->setPrice($legoData['price']);
+            $lego->setPieces($legoData['pieces']);
+            $lego->setBoxImage($legoData['imagebox']);
+            $lego->setLegoImage($legoData['imagebg']);
+
+            $legos[] = $lego; // Ajoute l'objet Lego au tableau
+        }
+
+        return $legos; // Retourne le tableau d'objets Lego
     }
 }
 

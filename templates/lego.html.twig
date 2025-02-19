@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Lego - {{ lego.name }}{% endblock %}
+{% block title %}Lego Collection{% endblock %}
 
 {% block content %}
+{% for lego in legos %}
 <div class="lego_card">
     <div class="info_section">
         <div class="lego_header">
@@ -22,7 +23,7 @@
         <div class="lego_social">
             <ul>
                 <li><i class="material-icons">share</i></li>
-                <li><i class="material-icons"></i></li>
+                <li><i class="material-icons">favorite</i></li>
                 <li><i class="material-icons">chat_bubble</i></li>
             </ul>
         </div>
@@ -31,4 +32,6 @@
         <!-- Utilisation du chemin relatif pour l'image -->
         <img src="/images/{{ lego.legoImage }}" alt="background lego card">
     </div>
+</div>
+{% endfor %}
 {% endblock %}
