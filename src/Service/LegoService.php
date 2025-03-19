@@ -33,8 +33,8 @@ class LegoService
             $lego->setDescription($legoData['description']);
             $lego->setPrice($legoData['price']);
             $lego->setPieces($legoData['pieces']);
-            $lego->setBoxImage($legoData['imagebox']);
-            $lego->setLegoImage($legoData['imagebg']);
+            $lego->setBoxImage($legoData['box_image']);
+            $lego->setLegoImage($legoData['lego_image']);
 
             $legos[] = $lego; // Ajoute l'objet Lego au tableau
         }
@@ -57,8 +57,8 @@ class LegoService
             $lego->setDescription($legoData['description']);
             $lego->setPrice($legoData['price']);
             $lego->setPieces($legoData['pieces']);
-            $lego->setBoxImage($legoData['imagebox']);
-            $lego->setLegoImage($legoData['imagebg']);
+            $lego->setBoxImage($legoData['box_image']);
+            $lego->setLegoImage($legoData['lego_image']);
 
             $legos[] = $lego; // Ajoute l'objet Lego au tableau
         }

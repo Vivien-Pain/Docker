@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LegoRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LegoRepository::class)]
@@ -16,10 +17,7 @@ class Lego
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $collection = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -29,10 +27,15 @@ class Lego
     private ?int $pieces = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $boximage = null;
+    private ?string $boxImage = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $legoimage = null;
+    private ?string $legoImage = null;
+
+    // Ajout de la relation avec LegoCollection
+    #[ORM\ManyToOne(targetEntity: LegoCollection::class)]
+    #[ORM\JoinColumn(nullable: true)] // La collection peut être null pour les Legos existants
+    private ?LegoCollection $collection = null;
 
     public function getId(): ?int
     {
@@ -47,18 +50,6 @@ class Lego
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getCollection(): ?string
-    {
-        return $this->collection;
-    }
-
-    public function setCollection(string $collection): static
-    {
-        $this->collection = $collection;
 
         return $this;
     }
@@ -99,26 +90,39 @@ class Lego
         return $this;
     }
 
-    public function getBoximage(): ?string
+    public function getBoxImage(): ?string
     {
-        return $this->boximage;
+        return $this->boxImage;
     }
 
-    public function setBoximage(string $boximage): static
+    public function setBoxImage(string $boxImage): static
     {
-        $this->boximage = $boximage;
+        $this->boxImage = $boxImage;
 
         return $this;
     }
 
-    public function getLegoimage(): ?string
+    public function getLegoImage(): ?string
     {
-        return $this->legoimage;
+        return $this->legoImage;
     }
 
-    public function setLegoimage(string $legoimage): static
+    public function setLegoImage(string $legoImage): static
     {
-        $this->legoimage = $legoimage;
+        $this->legoImage = $legoImage;
+
+        return $this;
+    }
+
+    // Getter et Setter pour la relation
+    public function getCollection(): ?LegoCollection
+    {
+        return $this->collection;
+    }
+
+    public function setCollection(?LegoCollection $collection): static
+    {
+        $this->collection = $collection;
 
         return $this;
     }
