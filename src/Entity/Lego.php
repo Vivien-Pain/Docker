@@ -37,6 +37,9 @@ class Lego
     #[ORM\JoinColumn(nullable: true)] // La collection peut être null pour les Legos existants
     private ?LegoCollection $collection = null;
 
+    #[ORM\Column]
+    private ?bool $afficher_aux_utilisateurs_connectes = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class Lego
     public function setCollection(?LegoCollection $collection): static
     {
         $this->collection = $collection;
+
+        return $this;
+    }
+
+    public function isAfficherAuxUtilisateursConnectes(): ?bool
+    {
+        return $this->afficher_aux_utilisateurs_connectes;
+    }
+
+    public function setAfficherAuxUtilisateursConnectes(bool $afficher_aux_utilisateurs_connectes): static
+    {
+        $this->afficher_aux_utilisateurs_connectes = $afficher_aux_utilisateurs_connectes;
 
         return $this;
     }

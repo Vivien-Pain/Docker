@@ -1,0 +1,9 @@
+{# templates/home/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% if user %}
+    <p>Bonjour {{ user.username }} !</p>
+    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+{% else %}
+    <a href="{{ path('app_login') }}">Se connecter</a>
+{% endif %}

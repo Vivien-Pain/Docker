@@ -18,8 +18,13 @@ class LegoController extends AbstractController
         $collections = $legoCollectionRepository->findAll();
 
         // Appel à la méthode getAllLegos pour récupérer tous les Legos
-        $legos = $legoRepository->findAll();
+        $legos = $legoRepository->findBy(['afficher_aux_utilisateurs_connectes'=> 0]);
 
+        $user = $this->getUser();
+        if ($user != null) {
+            $legos = array_merge($legos, $legoRepository->findBy(['afficher_aux_utilisateurs_connectes'=> 1]));
+        }
+    
         // Rendu du template lego.html.twig avec l'objet Legos et collections
         return $this->render('lego.html.twig', [
             'legos' => $legos,

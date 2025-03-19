@@ -3,6 +3,13 @@
 {% block title %}Lego Collection{% endblock %}
 
 {% block content %}
+    {% if app.user %}
+        Bonjour, {{ app.user.email }}!
+        <a href="{{ path('_logout_main') }}">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('lego_store_login') }}">Connexion</a>
+    {% endif %}
+
     <nav>
         <a href="/">All</a> |
         {% for collection in collections %}
